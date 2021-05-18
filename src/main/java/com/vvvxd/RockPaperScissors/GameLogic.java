@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameLogic {
+    private  Field field = new Field();
     private int choice;
     private final Scanner scanner = new Scanner(System.in);
 
@@ -12,7 +13,6 @@ public class GameLogic {
         while (validateChoice(choice)) {
             choice = scanner.nextInt();
         }
-        Field field = new Field();
         field.setUserChoice(getFigure(choice));
         System.out.println("User choice " + field.getUserChoice());
         field.setPcChoice(getRandomFigure());
