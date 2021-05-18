@@ -1,17 +1,45 @@
 package main.java.com.vvvxd.RockPaperScissors;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameLogic {
-    private String userChoice;
-    private String pcChoice;
+    private int choice;
+    private final Scanner scanner = new Scanner(System.in);
 
-    public void start(int choice) {
-        userChoice = getFigure(choice);
-        System.out.println("User choice " + userChoice);
-        pcChoice = getRandomFigure();
-        System.out.println("PC choice " + pcChoice);
-        getWinner(userChoice, pcChoice);
+    public void start() {
+        startMenu();
+        while (validateChoice(choice)) {
+            choice = scanner.nextInt();
+        }
+        Field field = new Field();
+        field.setUserChoice(getFigure(choice));
+        System.out.println("User choice " + field.getUserChoice());
+        field.setPcChoice(getRandomFigure());
+        System.out.println("PC choice " + field.getPcChoice());
+        getWinner(field.getUserChoice(), field.getPcChoice());
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    private void startMenu() {
+        System.out.println("Game Rock-Shears-Paper");
+        System.out.println("Choose a figure\n");
+        System.out.println("1. ROCK");
+        System.out.println("2. SCISSORS");
+        System.out.println("3. PAPER");
+        choice = scanner.nextInt();
+    }
+
+    private boolean validateChoice(int input) {
+        if (choice < 1 || choice > 3) {
+            System.out.println("Your choice is wrong!");
+            System.out.println("Please, choose again.");
+            return true;
+        }
+        return false;
     }
 
     private void getWinner(String userChoice, String pcChoice) {
@@ -42,13 +70,5 @@ public class GameLogic {
             default:
                 return "ROCK";
         }
-    }
-
-    public String getUserChoice() {
-        return userChoice;
-    }
-
-    public String getPcChoice() {
-        return pcChoice;
     }
 }
